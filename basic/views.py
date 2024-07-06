@@ -12,3 +12,11 @@ def profile_list(request):
         return render(request, 'profile_list.html', {"profiles": profiles})
     else:
         return redirect(home)
+
+
+def profile(request, pk):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user_id=pk)
+        return render(request, 'profile.html', {"profile": profile})
+    else:
+        return redirect(home)
