@@ -7,38 +7,54 @@
         <h1>{{ profile.user.username }}'s Profile</h1>
 
         <div class="row">
-            <div class="col-md-6">
-                <h3>Follows</h3>
-                <ul class="list-group">
-                    {% for following in profile.follows.all %}
-                        <li class="list-group-item">
-                            <a href="{% url 'profile' following.user.id %}">
-                                @{{ following }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <div class="col-md-3">
+                <div class="follows-section">
+                    <h3>Follows</h3>
+                    <ul class="list-group">
+                        {% for following in profile.follows.all %}
+                            <li class="list-group-item">
+                                <a href="{% url 'profile' following.user.id %}">
+                                    @{{ following }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
-            <div class="col-md-6">
-                <h3>Followed by</h3>
-                <ul class="list-group">
-                    {% for following in profile.followed_by.all %}
-                        <li class="list-group-item">
-                            <a href="{% url 'profile' following.user.id %}">
-                                @{{ following }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-                <form method="POST">
-                    {% csrf_token %}
-                    {%if profile in user.profile.follows.all%}
-                        <button type="submit" class="btn btn-danger" name="follow" value="unfollow">Unfollow {{profile.user.username}}</button>
-                    {%else%}
-                        <button type="submit" class="btn btn-primary" name="follow" value="follow">Follow {{profile.user.username}}</button>
-                    {%endif%}
-                </form>
+                <div class="followed-by-section">
+                    <h3>Followed by</h3>
+                    <ul class="list-group">
+                        {% for following in profile.followed_by.all %}
+                            <li class="list-group-item">
+                                <a href="{% url 'profile' following.user.id %}">
+                                    @{{ following }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        {% if profile in user.profile.follows.all %}
+                            <button type="submit" class="btn btn-danger" name="follow" value="unfollow">Unfollow {{ profile.user.username }}</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary" name="follow" value="follow">Follow {{ profile.user.username }}</button>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tweets-section">
+                    <h3>{{ profile.user.username }}'s Tweets</h3>
+                    <ul class="list-group">
+                        {% for tweet in profile.user.tweets.all %}
+                            <li class="list-group-item">
+                                <p>{{ tweet.text }}</p>
+                                <small>{{ tweet.date }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

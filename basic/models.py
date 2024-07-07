@@ -1,6 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+
+class Tweet(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tweets')
+    date = models.DateTimeField(auto_now_add=True)
+    text = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f"{self.user}: {self.text} : {self.date.strftime('%Y-%m-%d %H:%M:%S')}"
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     follows = models.ManyToManyField('self', related_name='followed_by', symmetrical=False, blank=True)
