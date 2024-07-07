@@ -31,6 +31,14 @@
                         </li>
                     {% endfor %}
                 </ul>
+                <form method="POST">
+                    {% csrf_token %}
+                    {%if profile in user.profile.follows.all%}
+                        <button type="submit" class="btn btn-danger" name="follow" value="unfollow">Unfollow {{profile.user.username}}</button>
+                    {%else%}
+                        <button type="submit" class="btn btn-primary" name="follow" value="follow">Follow {{profile.user.username}}</button>
+                    {%endif%}
+                </form>
             </div>
         </div>
     </div>
