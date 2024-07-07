@@ -3,7 +3,9 @@ from .models import Profile, Tweet
 from django.shortcuts import redirect
 from .forms import TweetForm
 from django.contrib import messages
-# Create your views here.
+from django.contrib.auth import authenticate, login ,logout 
+
+
 def home(request):
     if request.user.is_authenticated:
         form = TweetForm(request.POST or None)
@@ -44,3 +46,23 @@ def profile(request, pk):
         return render(request, 'profile.html', {"profile": profile, "tweets": tweets})
     else:
         return redirect(home)
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            messages.success(request, 'Welcome ' + username)
+            return redirect('home')
+        else:
+            messages.error(request, 'Error wrong username/password')
+            return redirect('login')
+
+    else:    
+        return render(request, 'login.html', {})
+
+def user_logout(request):
+    logout(request)
+    return redirect('home')
