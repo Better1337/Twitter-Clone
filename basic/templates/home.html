@@ -6,7 +6,20 @@
     <div class="text-center my-4">
         <h1 class="display-4">Welcome to Twitter Clone</h1>
     </div>
-    <div class="container">
+    {% if form %}
+    <div class="container-custom form-custom">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Tweet</button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="container-custom">
         {% for tweet in tweets %}
             <div class="card tweet-card my-3">
                 <div class="card-body tweet-card-body">
