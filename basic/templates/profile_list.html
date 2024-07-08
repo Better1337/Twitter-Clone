@@ -3,32 +3,29 @@
 {% block title %}Twitter Clone{% endblock %}
 
 {% block content %}
-    <div style="text-align: center;">
+    <div style="text-align: center;" class="my-4">
         <h1>Profile List</h1>
     </div>
-
-
-
-
-    {% if profiles%}
-        {% for profile in profiles %}
-
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-              <div class="col-md-4">
-                <img src="{% static 'images/userbasicicon.jpg'%}" class="img-fluid rounded-start" alt="Icon">
-              </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title">{{ profile.user.username }}</h5>
-                  <p class="card-text"><a href="{% url 'profile' profile.user.id %}">@{{ profile.user.username }}</a></p>
-                  <p class="card-text"><small class="text-body-secondary">{{ profile.date_modified  }}</small></p>
+    {% if profiles %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for profile in profiles %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{% static 'images/userbasicicon.jpg' %}" class="img-fluid rounded-start" alt="Icon">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ profile.user.username }}</h5>
+                                    <p class="card-text"><a href="{% url 'profile' pk=profile.pk %}">@{{ profile.user.username }}</a></p>
+                                    <p class="card-text"><small class="text-body-secondary">{{ profile.date_modified|date:"Y-m-d H:i" }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-            <br/><br/>
-        {% endfor %}
+            {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
