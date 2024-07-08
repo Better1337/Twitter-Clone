@@ -22,8 +22,12 @@
     <div class="container-custom">
         {% for tweet in tweets %}
             <div class="card tweet-card my-3">
+                <div class="card-header tweet-card-header">
+                    <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
+                </div>
                 <div class="card-body tweet-card-body">
-                    <p class="card-text">{{ tweet }}</p>
+                    <p class="card-text">{{ tweet.text }}</p>
+                    <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
                 </div>
             </div>
         {% endfor %}
