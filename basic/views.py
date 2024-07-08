@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout 
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-
+from django.contrib.auth.models import User
 def home(request):
     if request.user.is_authenticated:
         form = TweetForm(request.POST or None)
@@ -28,7 +28,7 @@ def profile_list(request):
         profiles= Profile.objects.exclude(user=request.user)
         return render(request, 'profile_list.html', {"profiles": profiles})
     else:
-        return redirect(home)
+        return redirect('home')
 
 
 def profile(request, pk):
@@ -45,8 +45,9 @@ def profile(request, pk):
             current_user.save()
 
         return render(request, 'profile.html', {"profile": profile, "tweets": tweets})
+        
     else:
-        return redirect(home)
+        return redirect('home')
 
 def user_login(request):
     if request.method == 'POST':
@@ -75,9 +76,20 @@ def user_register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            user = authenticate(username=username, password=password)
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('home')
 
     return render(request, 'register.html', {'form': form})    
+
+def user_update(request):
+    if request.user.is_authenticated:
+        form = SignUpForm(request.POST or None, instance=request.user)
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        return render(request, 'user_update.html', {'form': form})
+    else:
+        return redirect('home')
