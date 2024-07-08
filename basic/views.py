@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from .models import Profile, Tweet
 from django.shortcuts import redirect
-from .forms import TweetForm
+from .forms import TweetForm, SignUpForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout 
-
+from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 def home(request):
     if request.user.is_authenticated:
@@ -66,3 +67,17 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+def user_register(request):
+    form = SignUpForm()
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('home')
+
+    return render(request, 'register.html', {'form': form})    
