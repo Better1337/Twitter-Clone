@@ -20,13 +20,16 @@
         background-color: #f8f9fa;
         border-radius: 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
     .tweet-card-body {
         padding: 20px;
     }
     .container-custom {
         padding: 20px;
-        max-width: 600px; /* Limiting the max width for better readability */
+        max-width: 1000px;
         margin: auto;
     }
     .form-custom {
@@ -41,6 +44,20 @@
         padding: 10px;
         font-size: 16px;
     }
+    .tweet-card-left {
+        width: 200;
+    }
+    .tweet-card-right {
+        width: 800px;
+    }
+    .img-thumbnail {
+      padding: 0rem;
+      background-color: var(--bs-body-bg);
+      border: var(--bs-border-width) solid var(--bs-border-color);
+      border-radius: var(--bs-border-radius);
+      max-width: 100%;
+      height: auto;
+  }
     </style>
   </head>
   <body>

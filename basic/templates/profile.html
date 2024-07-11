@@ -14,7 +14,6 @@
     </div>
     {% if request.user.id == profile.user.id%}
                 <div class="actions-section">
-                    <h3>Change Your Profile Image</h3>
                         <li class="list-group-item">
                             <a href="{% url 'update_profile_image' %}" class="btn btn-primary">Update Image</a>
                         </li>

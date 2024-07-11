@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+{% load static %}
 {% block title %}Twitter Clone{% endblock %}
 
 {% block content %}
@@ -22,12 +22,21 @@
     <div class="container-custom">
         {% for tweet in tweets %}
             <div class="card tweet-card my-3">
-                <div class="card-header tweet-card-header">
-                    <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
+                <div class="tweet-card-left">
+                    {% if tweet.user.profile.profile_image %}
+                        <img src="{{ tweet.user.profile.profile_image.url }}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                    {% else %}
+                        <img src="{% static 'images/userbasicicon.jpg' %}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                    {% endif %}
                 </div>
-                <div class="card-body tweet-card-body">
-                    <p class="card-text">{{ tweet.text }}</p>
-                    <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
+                <div class="tweet-card-right">
+                    <div class="card-header tweet-card-header">
+                        <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
+                    </div>
+                    <div class="card-body tweet-card-body">
+                        <p class="card-text">{{ tweet.text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
+                    </div>
                 </div>
             </div>
         {% endfor %}
