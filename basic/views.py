@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from .models import Profile, Tweet
 from django.shortcuts import redirect
-from .forms import TweetForm, SignUpForm
+from .forms import TweetForm, SignUpForm, ProfileImageForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout 
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
+
 def home(request):
     if request.user.is_authenticated:
         form = TweetForm(request.POST or None)
@@ -93,3 +94,17 @@ def user_update(request):
         return render(request, 'user_update.html', {'form': form})
     else:
         return redirect('home')
+
+def update_profile_image(request):
+    if request.user.is_authenticated:
+        profile = request.user.profile
+        form = ProfileImageForm(request.POST or None, request.FILES or None, instance=profile)
+    
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        return render(request, 'update_profile_image.html', {'form': form})
+    else:
+        return redirect('login')
+

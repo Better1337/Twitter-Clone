@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tweet
+from .models import Tweet, Profile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -26,3 +26,10 @@ class SignUpForm(UserCreationForm):
         self.fields['password1'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
         self.fields['password2'].widget = forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'})
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
+
+class ProfileImageForm(forms.ModelForm):
+    profile_image = forms.ImageField(required=False, label="ProfileImage")
+
+    class Meta:
+        model = Profile
+        fields = ['profile_image']
