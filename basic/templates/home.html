@@ -36,6 +36,13 @@
                     <div class="card-body tweet-card-body">
                         <p class="card-text">{{ tweet.text }}</p>
                         <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
+                        <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
+                            {% if user in tweet.likes.all%}
+                            <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-danger">❤</a>
+                        {% else %}
+                            <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
+                        {% endif %}</p>
+                        
                     </div>
                 </div>
             </div>

@@ -75,6 +75,12 @@
                             <li class="list-group-item">
                                 <p>{{ tweet.text }}</p>
                                 <small>{{ tweet.date }}</small>
+                                <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
+                                    {% if user in tweet.likes.all%}
+                                    <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-danger">❤</a>
+                                {% else %}
+                                    <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
+                                {% endif %}</p>
                             </li>
                             <div style="margin-bottom: 10px;"></div>
                         {% endfor %}

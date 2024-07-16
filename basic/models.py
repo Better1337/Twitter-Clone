@@ -7,6 +7,11 @@ class Tweet(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     text = models.CharField(max_length=150)
 
+    likes = models.ManyToManyField(User, related_name='tweet_likes', blank=True)
+
+    def likes_count(self):
+        return self.likes.count()    
+        
     def __str__(self):
         return f"{self.user}: {self.text} : {self.date.strftime('%Y-%m-%d %H:%M:%S')}"
 

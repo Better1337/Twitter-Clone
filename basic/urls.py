@@ -9,4 +9,5 @@ urlpatterns = [
     path('register/', views.user_register, name='register'),
     path('user_update', views.user_update, name='user_update'),
     path('update_profile_image', views.update_profile_image, name='update_profile_image'),
+    path('tweet_like/<int:pk>/', views.tweet_like, name='tweet_like'),
 ]

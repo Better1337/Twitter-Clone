@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Profile, Tweet
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from .forms import TweetForm, SignUpForm, ProfileImageForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout 
@@ -108,3 +108,14 @@ def update_profile_image(request):
     else:
         return redirect('login')
 
+def tweet_like(request, pk):
+    if request.user.is_authenticated:
+        tweet = get_object_or_404(Tweet, id=pk)
+        user = request.user
+        if user in tweet.likes.all():
+            tweet.likes.remove(user)
+        else:
+            tweet.likes.add(user)
+        return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('login')
