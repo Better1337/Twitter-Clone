@@ -142,8 +142,10 @@ def tweet_update(request, pk):
                     tweet.user = request.user
                     tweet.save()
                     messages.success(request, 'Tweet updated')
-                    return redirect('home')
-            return render(request, 'tweet_update.html', {'form': form, 'tweet': tweet})
+                    next_url = request.POST.get('next', 'home')
+                    return redirect(next_url)
+            next_url = request.GET.get('next', '')
+            return render(request, 'tweet_update.html', {'form': form, 'tweet': tweet, 'next': next_url})
         else:
             messages.error(request, 'You are not allowed to update this tweet')
             return redirect('home')

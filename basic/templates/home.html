@@ -37,14 +37,14 @@
                         <p class="card-text">{{ tweet.text }}</p>
                         <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
                         <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
-                            {% if user in tweet.likes.all%}
+                            {% if user in tweet.likes.all %}
                             <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-danger">❤</a>
                         {% else %}
                             <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
                         {% endif %}</p>
                         {% if request.user.username == tweet.user.username %}
-                            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
-                            <a href="{% url 'tweet_update' tweet.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'tweet_delete' tweet.id %}?next={{ request.path }}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'tweet_update' tweet.id %}?next={{ request.path }}" class="btn btn-primary">Edit</a>
                         {% endif %}
                         
                     </div>

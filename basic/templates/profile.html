@@ -12,7 +12,7 @@
         <img src="{% static 'images/userbasicicon.jpg' %}" class="img-thumbnail" style="width: 200px; height: 200px;">
         {% endif %}
     </div>
-    {% if request.user.id == profile.user.id%}
+    {% if request.user.id == profile.user.id %}
                 <div class="actions-section">
                         <li class="list-group-item">
                             <a href="{% url 'update_profile_image' %}" class="btn btn-primary">Update Image</a>
@@ -57,7 +57,7 @@
                         {% endif %}
                     </form>
                 </div>
-                {% if request.user.id == profile.user.id%}
+                {% if request.user.id == profile.user.id %}
                 <div class="actions-section">
                     <h3>Actions</h3>
                         <li class="list-group-item">
@@ -76,14 +76,14 @@
                                 <p>{{ tweet.text }}</p>
                                 <small>{{ tweet.date }}</small>
                                 <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
-                                    {% if user in tweet.likes.all%}
+                                    {% if user in tweet.likes.all %}
                                     <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-danger">❤</a>
                                 {% else %}
                                     <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
                                 {% endif %}</p>
                                 {% if request.user.username == tweet.user.username %}
-                            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
-                            <a href="{% url 'tweet_update' tweet.id %}" class="btn btn-primary">Edit</a>
+                            <a href="{% url 'tweet_delete' tweet.id %}?next={{ request.path }}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'tweet_update' tweet.id %}?next={{ request.path }}" class="btn btn-primary">Edit</a>
                         {% endif %}
                             </li>
                             <div style="margin-bottom: 10px;"></div>
