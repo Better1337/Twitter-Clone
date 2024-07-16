@@ -44,6 +44,7 @@
                         {% endif %}</p>
                         {% if request.user.username == tweet.user.username %}
                             <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'tweet_update' tweet.id %}" class="btn btn-primary">Edit</a>
                         {% endif %}
                         
                     </div>
