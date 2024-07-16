@@ -119,3 +119,14 @@ def tweet_like(request, pk):
         return redirect(request.META.get('HTTP_REFERER'))
     else:
         return redirect('login')
+
+def tweet_delete(request, pk):
+    if request.user.is_authenticated:
+        tweet = get_object_or_404(Tweet, id=pk)
+        if request.user.username == tweet.user.username:
+            tweet.delete()
+            return redirect(request.META.get('HTTP_REFERER'))
+        else:
+            return redirect(request.META.get('HTTP_REFERER'))
+    else:
+        return redirect('login')

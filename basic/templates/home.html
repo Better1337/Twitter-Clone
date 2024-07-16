@@ -42,6 +42,9 @@
                         {% else %}
                             <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
                         {% endif %}</p>
+                        {% if request.user.username == tweet.user.username %}
+                            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                        {% endif %}
                         
                     </div>
                 </div>
