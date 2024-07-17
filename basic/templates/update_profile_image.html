@@ -1,10 +1,10 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>Aktualizacja zdjęcia profilowego</h2>
+<h2>Update Your Profile Image</h2>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Zapisz zdjęcie</button>
+    <button type="submit">Save Image</button>
 </form>
 {% endblock %}

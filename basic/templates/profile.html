@@ -4,18 +4,19 @@
 
 {% if profile %}
 
-    <div class="container">
+    <div>
         <h1>{{ profile.user.username }}'s Profile</h1>
         {% if profile.profile_image %}
         <img src="{{ profile.profile_image.url }}" class="img-thumbnail" style="width: 200px; height: 200px;">
         {% else %}
         <img src="{% static 'images/userbasicicon.jpg' %}" class="img-thumbnail" style="width: 200px; height: 200px;">
         {% endif %}
+        {{ profile.bio | default:"No bio available." }}
     </div>
     {% if request.user.id == profile.user.id %}
                 <div class="actions-section">
                         <li class="list-group-item">
-                            <a href="{% url 'update_profile_image' %}" class="btn btn-primary">Update Image</a>
+                            <a href="{% url 'update_profile_image' %}" class="btn btn-primary">Update Profile</a>
                         </li>
                     </ul>
                 </div>
@@ -61,7 +62,7 @@
                 <div class="actions-section">
                     <h3>Actions</h3>
                         <li class="list-group-item">
-                            <a href="{% url 'user_update' %}" class="btn btn-primary">Update Profile</a>
+                            <a href="{% url 'user_update' %}" class="btn btn-primary">Update Account</a>
                         </li>
                     </ul>
                 </div>

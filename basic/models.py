@@ -20,6 +20,7 @@ class Profile(models.Model):
     follows = models.ManyToManyField('self', related_name='followed_by', symmetrical=False, blank=True)
     date_modified = models.DateTimeField(User,auto_now=True)
     profile_image = models.ImageField(upload_to='images/', blank=True, null=True)
+    bio = models.CharField(max_length=240, blank=True, null=True)
     
 
     def __str__(self):
