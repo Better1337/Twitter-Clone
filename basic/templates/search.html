@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Search</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input type="input" class="form-control" placeholder="Search Tweets" name="search" required>
+    </div>
+    <button type="submit">Search</button>
+</form>
+{% if search %}
+<h2>Search Results For: {{search}} </h2>
+{% if searched_tweets %}
+    <div class="container-custom">
+        {% for tweet in searched_tweets %}
+        <div class="card tweet-card my-3">
+            <div class="tweet-card-left">
+                {% if tweet.user.profile.profile_image %}
+                    <img src="{{ tweet.user.profile.profile_image.url }}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                {% else %}
+                    <img src="{% static 'images/userbasicicon.jpg' %}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                {% endif %}
+            </div>
+            <div class="tweet-card-right">
+                <div class="card-header tweet-card-header">
+                    <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
+                </div>
+                <div class="card-body tweet-card-body">
+                    <p class="card-text">{{ tweet.text }}</p>
+                    <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
+                    <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+{% endif %}
+{% endblock %}

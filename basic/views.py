@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login ,logout
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-
 def home(request):
     if request.user.is_authenticated:
         form = TweetForm(request.POST or None)
@@ -151,3 +150,15 @@ def tweet_update(request, pk):
             return redirect('home')
     else:
         return redirect('login')
+
+def search(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            search = request.POST['search']
+            searched_tweets = Tweet.objects.filter(text__icontains=search)
+            return render(request, 'search.html', {'search': search, 'searched_tweets': searched_tweets})
+        else:
+            return render(request, 'search.html')
+    else:
+        return redirect('login')
+
