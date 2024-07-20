@@ -18,7 +18,10 @@
             <a class="nav-link" href="{% url 'logout'%}">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'search'%}">Search</a>
+            <a class="nav-link" href="{% url 'search'%}">Search Tweets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'user_search'%}">Search Users</a>
           </li>
           {%else%}
           <li class="nav-item">

@@ -162,3 +162,13 @@ def search(request):
     else:
         return redirect('login')
 
+def user_search(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            search = request.POST['search']
+            searched_users = User.objects.filter(username__icontains=search)
+            return render(request, 'user_search.html', {'search': search, 'searched_users': searched_users})
+        else:
+            return render(request, 'user_search.html')
+    else:
+        return redirect('login')
