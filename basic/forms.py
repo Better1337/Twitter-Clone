@@ -28,7 +28,7 @@ class SignUpForm(UserCreationForm):
         self.fields['username'].widget = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'})
 
 class ProfileImageForm(forms.ModelForm):
-    profile_image = forms.ImageField(required=False, label="ProfileImage")
+    profile_image = forms.ImageField(required=False, label="Profile Image")
     bio= forms.CharField(required=False, label="Bio", widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Bio'}))
 
     class Meta:
