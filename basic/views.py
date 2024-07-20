@@ -21,7 +21,7 @@ def home(request):
         return render(request, 'home.html', {"tweets": tweets, "form": form})
     else:
         tweets = Tweet.objects.all().order_by('-date')
-        return render(request, 'home.html')
+        return render(request, 'login.html')
 
 def profile_list(request):
     if request.user.is_authenticated:
