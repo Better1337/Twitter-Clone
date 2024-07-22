@@ -29,7 +29,7 @@
     </div>
 
     <div class="container-custom form-custom">
-        <form method="POST" action="{% url 'tweet_update' tweet.id %}?next={{ next }}">
+        <form method="POST" enctype="multipart/form-data" action="{% url 'tweet_update' tweet.id %}?next={{ next }}">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="hidden" name="next" value="{{ next }}">

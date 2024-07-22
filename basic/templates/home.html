@@ -35,6 +35,9 @@
                     </div>
                     <div class="card-body tweet-card-body">
                         <p class="card-text">{{ tweet.text }}</p>
+                        {% if tweet.image %}
+                            <img src="{{ tweet.image.url }}"  style="width:300px; height: auto;">
+                        {% endif %}
                         <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
                         <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
                             {% if user in tweet.likes.all %}
