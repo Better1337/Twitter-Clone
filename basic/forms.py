@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class TweetForm(forms.ModelForm):
     text = forms.CharField(required=True, widget=forms.Textarea(attrs={'placeholder': "What's going on?", 'class': "form-control"}),
     label="")
+    image = forms.ImageField(required=False, label="Add an image")
 
     class Meta:
         model=Tweet

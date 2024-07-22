@@ -9,7 +9,7 @@ from django import forms
 from django.contrib.auth.models import User
 def home(request):
     if request.user.is_authenticated:
-        form = TweetForm(request.POST or None)
+        form = TweetForm(request.POST or None, request.FILES or None)
         if request.method == 'POST':
             if form.is_valid():
                 tweet = form.save(commit=False)
@@ -134,7 +134,7 @@ def tweet_update(request, pk):
     if request.user.is_authenticated:
         tweet = get_object_or_404(Tweet, id=pk)
         if request.user == tweet.user:
-            form = TweetForm(request.POST or None, instance=tweet)
+            form = TweetForm(request.POST or None,request.FILES or None, instance=tweet)
             if request.method == 'POST':
                 if form.is_valid():
                     tweet = form.save(commit=False)
