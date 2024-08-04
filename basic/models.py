@@ -33,3 +33,12 @@ def user_did_save(sender, instance, created, **kwargs):
         user_profile.follows.set([instance.profile.id])
         user_profile.save()
 post_save.connect(user_did_save, sender=User)
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE, related_name='comments')
+    date = models.DateTimeField(auto_now_add=True)
+    text = models.CharField(max_length=150)
+
+    def __str__(self):
+        return f"{self.user}: {self.text} : {self.date.strftime('%Y-%m-%d %H:%M:%S')}"

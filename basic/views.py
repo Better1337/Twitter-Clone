@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Profile, Tweet
+from .models import Profile, Tweet, Comment
 from django.shortcuts import redirect, get_object_or_404
-from .forms import TweetForm, SignUpForm, ProfileImageForm
+from .forms import TweetForm, SignUpForm, ProfileImageForm, CommentForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login ,logout 
 from django.contrib.auth.forms import UserCreationForm
@@ -175,4 +175,21 @@ def user_search(request):
 
 def tweet_detail(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
-    return render(request, 'tweet_detail.html', {'tweet': tweet})
+    comments = tweet.comments.all()  
+    
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.tweet = tweet
+            comment.save()
+            return redirect('tweet_detail', pk=tweet.pk) 
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'tweet_detail.html', {
+        'tweet': tweet,
+        'comments': comments,
+        'comment_form': comment_form
+    })
