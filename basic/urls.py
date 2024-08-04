@@ -15,4 +15,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('user_search/', views.user_search, name='user_search'),
     path('tweet_detail/<int:pk>/', views.tweet_detail, name='tweet_detail'),
+    path('edit_comment/<int:pk>/', views.edit_comment, name='edit_comment'),
+    path('delete_comment/<int:pk>/', views.delete_comment, name='delete_comment'),
 ]

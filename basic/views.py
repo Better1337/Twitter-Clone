@@ -176,7 +176,7 @@ def user_search(request):
 def tweet_detail(request, pk):
     tweet = get_object_or_404(Tweet, pk=pk)
     comments = tweet.comments.all()  
-    
+
     if request.method == 'POST':
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
@@ -193,3 +193,27 @@ def tweet_detail(request, pk):
         'comments': comments,
         'comment_form': comment_form
     })
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.user:
+        messages.error(request, "You do not have permission to edit this comment.")
+        return redirect('tweet_detail', pk=comment.tweet.pk)  
+
+    form = CommentForm(instance=comment)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comment successfully updated.")
+            return redirect('tweet_detail', pk=comment.tweet.pk) 
+    return render(request, 'edit_comment.html', {'form': form, 'comment': comment})
+
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.user != comment.user:
+        messages.error(request, "You do not have permission to delete this comment.")
+        return redirect('tweet_detail', pk=comment.tweet.pk)
+
+    comment.delete()
+    messages.success(request, "Comment deleted.")
+    return redirect('tweet_detail', pk=comment.tweet.pk)
