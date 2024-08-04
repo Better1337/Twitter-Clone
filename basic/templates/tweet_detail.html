@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+<div class="container-custom">
+        <div class="card tweet-card my-3">
+            <div class="tweet-card-left">
+                {% if tweet.user.profile.profile_image %}
+                    <img src="{{ tweet.user.profile.profile_image.url }}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                {% else %}
+                    <img src="{% static 'images/userbasicicon.jpg' %}" class="img-thumbnail" style="width: 200px; height: 200px;">
+                {% endif %}
+            </div>
+            <div class="tweet-card-right">
+                <div class="card-header tweet-card-header">
+                    <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
+                </div>
+                <div class="card-body tweet-card-body">
+                    <a href="{% url 'tweet_detail' tweet.id %}">{{ tweet.text }}</a></p>
+                    {% if tweet.image %}
+                        <img src="{{ tweet.image.url }}"  style="width:300px; height: auto;">
+                    {% endif %}
+                    <p class="card-text"><small class="text-muted">{{ tweet.date }}</small></p>
+                    <p class="card-text"><small class="text-muted">Likes: {{ tweet.likes_count }}</small>   
+                        {% if user in tweet.likes.all %}
+                        <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-danger">❤</a>
+                    {% else %}
+                        <a href="{% url 'tweet_like' tweet.id %}" class="btn btn-primary">❤</a>
+                    {% endif %}</p>
+                    {% if request.user.username == tweet.user.username %}
+                        <a href="{% url 'tweet_delete' tweet.id %}?next={{ request.path }}" class="btn btn-danger">Delete</a>
+                        <a href="{% url 'tweet_update' tweet.id %}?next={{ request.path }}" class="btn btn-primary">Edit</a>
+                    {% endif %}
+                    
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

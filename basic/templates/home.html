@@ -34,7 +34,7 @@
                         <h5 class="card-title"><a href="{% url 'profile' tweet.user.pk %}">{{ tweet.user }}</a></h5>
                     </div>
                     <div class="card-body tweet-card-body">
-                        <p class="card-text">{{ tweet.text }}</p>
+                        <a href="{% url 'tweet_detail' tweet.id %}">{{ tweet.text }}</a></p>
                         {% if tweet.image %}
                             <img src="{{ tweet.image.url }}"  style="width:300px; height: auto;">
                         {% endif %}

@@ -172,3 +172,7 @@ def user_search(request):
             return render(request, 'user_search.html')
     else:
         return redirect('login')
+
+def tweet_detail(request, pk):
+    tweet = get_object_or_404(Tweet, pk=pk)
+    return render(request, 'tweet_detail.html', {'tweet': tweet})
