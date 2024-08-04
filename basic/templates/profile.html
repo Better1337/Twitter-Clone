@@ -74,7 +74,7 @@
                     <ul class="list-group">
                         {% for tweet in profile.user.tweets.all %}
                             <li class="list-group-item">
-                                <p class="card-text">{{ tweet.text }}</p>
+                                    <a href="{% url 'tweet_detail' tweet.id %}">{{ tweet.text }}</a></p>
                                 {% if tweet.image %}
                                     <img src="{{ tweet.image.url }}"  style="width:300px; height: auto;">
                                 {% endif %}
